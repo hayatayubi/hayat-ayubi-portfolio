@@ -56,6 +56,19 @@
   .demo li.neat .name { color: var(--ink); font-weight: 600; }
   .demo li.swap .name { opacity: 0; }
   .demo-cap { padding: 10px 16px 14px; font-size: 13px; color: var(--muted); }
+  .shots.land img { height: 300px; width: auto; }
+  .shots-label { margin-top: 20px; font-size: 13px; color: var(--muted); font-weight: 600; letter-spacing: .02em; }
+  .pane-demo { position: relative; margin-top: 24px; max-width: 720px; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: linear-gradient(135deg, #cfe0ff, #f3d9ff 55%, #ffe3d1); }
+  @media (prefers-color-scheme: dark) { .pane-demo { background: linear-gradient(135deg, #1b2a52, #3a2655 55%, #51332b); } }
+  .pane-menubar { position: absolute; top: 0; left: 0; right: 0; height: 6%; background: rgba(255,255,255,.35); backdrop-filter: blur(6px); }
+  .pane-zone { position: absolute; border-radius: 10px; background: rgba(47,91,234,.22); border: 2px solid var(--accent); opacity: 0; transition: opacity .25s; top: 8%; bottom: 3%; }
+  .pane-zone.on { opacity: 1; }
+  .pw { position: absolute; border-radius: 10px; background: var(--card); box-shadow: 0 8px 24px rgba(0,0,0,.18), 0 0 0 1px var(--line); transition: left .55s cubic-bezier(.3,.7,.2,1), top .55s cubic-bezier(.3,.7,.2,1), width .55s cubic-bezier(.3,.7,.2,1), height .55s cubic-bezier(.3,.7,.2,1); overflow: hidden; }
+  .pw .tb { height: 16px; display: flex; gap: 4px; align-items: center; padding: 0 7px; background: var(--chip); }
+  .pw .tb i { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); opacity: .5; }
+  .pw .ln { height: 5px; margin: 8px 10px 0; border-radius: 3px; background: var(--line); }
+  .pw.a .tb { background: #ffd9d4; } .pw.b .tb { background: #d4e6ff; } .pw.c .tb { background: #d8f5e4; }
+  .pane-chip { position: absolute; right: 12px; bottom: 12px; font-size: 12px; padding: 3px 10px; border-radius: 99px; background: var(--card); border: 1px solid var(--line); color: var(--muted); font-variant-numeric: tabular-nums; }
   footer { padding: 28px 0 80px; color: var(--muted); font-size: 14px; }
   footer a { color: inherit; }
   @media (max-width: 560px) { section.app { padding: 20px; border-radius: 20px; } .shots img { height: 320px; } .shots.phone img { height: 380px; } .shots.wide img { width: 88%; height: auto; } }
@@ -82,6 +95,7 @@
       <a class="btn" href="https://tern-inbox.github.io">Website</a>
       <span class="btn soon">iPhone: in App Store review</span>
     </div>
+    <div class="shots-label">On iPhone</div>
     <div class="shots phone">
       <img src="img/tern-1-needs-reply.png" alt="Tern: needs reply" loading="lazy">
       <img src="img/tern-2-fyi.png" alt="Tern: FYI" loading="lazy">
@@ -89,6 +103,14 @@
       <img src="img/tern-4-reader.png" alt="Tern: reading an email" loading="lazy">
       <img src="img/tern-5-reply.png" alt="Tern: reply" loading="lazy">
       <img src="img/tern-6-newsletters.png" alt="Tern: newsletters" loading="lazy">
+    </div>
+    <div class="shots-label">On Mac</div>
+    <div class="shots land">
+      <img src="img/tern-mac-01-inbox.jpg" alt="Tern on Mac: needs reply inbox" loading="lazy">
+      <img src="img/tern-mac-02-draft.jpg" alt="Tern on Mac: drafting a reply" loading="lazy">
+      <img src="img/tern-mac-03-command.jpg" alt="Tern on Mac: command bar" loading="lazy">
+      <img src="img/tern-mac-09-invite.jpg" alt="Tern on Mac: calendar invite" loading="lazy">
+      <img src="img/tern-mac-05-newsletters.jpg" alt="Tern on Mac: newsletters" loading="lazy">
     </div>
   </section>
 
@@ -103,7 +125,13 @@
       <a class="btn" href="https://github.com/lumen-tv/Lumen-TV/releases/latest">Android APK</a>
       <a class="btn" href="https://github.com/lumen-tv/Lumen-TV">GitHub</a>
     </div>
-    <div class="shots wide"><img src="img/lumen-mac-1.jpg" alt="Lumen on Mac: Live TV home with favourites" loading="lazy"></div>
+    <div class="shots land">
+      <img src="img/lumen-mac-1.jpg" alt="Lumen on Mac: Live TV home with favourites" loading="lazy">
+      <img src="img/lumen-mac-guide.jpg" alt="Lumen on Mac: TV guide" loading="lazy">
+      <img src="img/lumen-mac-movies.jpg" alt="Lumen on Mac: movies" loading="lazy">
+      <img src="img/lumen-mac-series.jpg" alt="Lumen on Mac: series" loading="lazy">
+      <img src="img/lumen-mac-mylist.jpg" alt="Lumen on Mac: My List" loading="lazy">
+    </div>
   </section>
 
   <section class="app" id="tidyshot">
@@ -133,7 +161,14 @@
       <a class="btn primary" href="https://github.com/hayatayubi/pane/releases/latest">Download for Mac</a>
       <a class="btn" href="https://github.com/hayatayubi/pane">GitHub</a>
     </div>
-    <div class="shots"><img src="img/pane-settings.jpg" alt="Pane settings window" loading="lazy" style="height:440px"></div>
+    <div class="pane-demo" id="panedemo" aria-label="Animation: windows snapping into tidy layouts with Pane">
+      <div class="pane-menubar"></div>
+      <div class="pane-zone" id="pz"></div>
+      <div class="pw a" id="wa"><div class="tb"><i></i><i></i><i></i></div><div class="ln"></div><div class="ln" style="width:60%"></div><div class="ln" style="width:75%"></div></div>
+      <div class="pw b" id="wb"><div class="tb"><i></i><i></i><i></i></div><div class="ln"></div><div class="ln" style="width:70%"></div><div class="ln" style="width:50%"></div></div>
+      <div class="pw c" id="wc"><div class="tb"><i></i><i></i><i></i></div><div class="ln"></div><div class="ln" style="width:55%"></div><div class="ln" style="width:80%"></div></div>
+      <div class="pane-chip" id="pchip">Drag to an edge</div>
+    </div>
   </section>
 
   <section class="app" id="flashcraft">
@@ -146,7 +181,13 @@
       <a class="btn primary" href="https://github.com/hayatayubi/flashcraft/releases/latest">Download for Mac</a>
       <a class="btn" href="https://github.com/hayatayubi/flashcraft">GitHub</a>
     </div>
-    <div class="shots wide"><img src="img/flashcraft-1.jpg" alt="Flashcraft deck list" loading="lazy"></div>
+    <div class="shots land">
+      <img src="img/flashcraft-decks.jpg" alt="Flashcraft deck list" loading="lazy">
+      <img src="img/flashcraft-deck.jpg" alt="Flashcraft deck page" loading="lazy">
+      <img src="img/flashcraft-question.jpg" alt="Flashcraft study card: question" loading="lazy">
+      <img src="img/flashcraft-answer.jpg" alt="Flashcraft study card: answer" loading="lazy">
+      <img src="img/flashcraft-themes.jpg" alt="Flashcraft themes" loading="lazy">
+    </div>
   </section>
 
   <section class="app" id="focuslist">
@@ -222,6 +263,33 @@
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (e, o) { if (e[0].isIntersecting) { loop(); o.disconnect(); } }, { threshold: .3 }).observe(box);
   } else { loop(); }
+})();
+</script>
+
+<script>
+(function () {
+  var box = document.getElementById('panedemo'); if (!box) return;
+  var A = document.getElementById('wa'), B = document.getElementById('wb'), C = document.getElementById('wc');
+  var Z = document.getElementById('pz'), chip = document.getElementById('pchip');
+  function put(el, l, t, w, h, z) { el.style.left = l + '%'; el.style.top = t + '%'; el.style.width = w + '%'; el.style.height = h + '%'; if (z) el.style.zIndex = z; }
+  function zone(l, w) { Z.style.left = l + '%'; Z.style.width = w + '%'; Z.classList.add('on'); }
+  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+  function messy() { put(A, 8, 14, 46, 52, 1); put(B, 30, 28, 44, 50, 2); put(C, 48, 12, 40, 56, 3); }
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) { put(A, 1, 8, 32, 89); put(B, 34, 8, 32, 89); put(C, 67, 8, 32, 89); chip.textContent = 'Thirds'; return; }
+  async function loop() {
+    while (true) {
+      messy(); Z.classList.remove('on'); chip.textContent = 'Drag to an edge'; await sleep(1600);
+      zone(0, 50); chip.textContent = 'Left half'; await sleep(700); put(A, 1, 8, 48.5, 89); Z.classList.remove('on'); await sleep(900);
+      zone(50, 50); chip.textContent = 'Right half'; await sleep(700); put(B, 50.5, 8, 48.5, 89); Z.classList.remove('on'); await sleep(900);
+      chip.textContent = 'Hotkey: thirds'; await sleep(700);
+      put(A, 1, 8, 32, 89); put(B, 34, 8, 32, 89); put(C, 67, 8, 32, 89, 4); await sleep(2800);
+    }
+  }
+  var started = false;
+  function go() { if (!started) { started = true; loop(); } }
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (e, o) { if (e[0].isIntersecting) { go(); o.disconnect(); } }, { threshold: .3 }).observe(box); else go();
+  messy();
 })();
 </script>
 </body>
