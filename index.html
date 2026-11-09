@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hayat Ayubi Portfolio</title>
+<meta name="description" content="Mac and iPhone apps built by Hayat Ayubi: Tern, Lumen, TidyShot, Pane, Flashcraft, Focus List and CalendarWidget.">
+<style>
+  :root {
+    --bg: #fbfaf8; --card: #ffffff; --ink: #16181d; --muted: #6a6f7a; --line: #e8e6e1;
+    --accent: #2f5bea; --accent-ink: #ffffff; --chip: #f0eee9; --shadow: 0 1px 2px rgba(0,0,0,.04), 0 12px 32px rgba(20,20,30,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0e0f12; --card: #16181d; --ink: #f2f2f0; --muted: #9a9fab; --line: #262932; --accent: #6b8cff; --accent-ink: #0e0f12; --chip: #20232b; --shadow: none; }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font: 16px/1.5 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Inter, Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+  header { padding: 72px 0 36px; }
+  header h1 { font-size: clamp(34px, 6vw, 56px); line-height: 1.05; letter-spacing: -.025em; font-weight: 750; }
+  header p { margin-top: 14px; color: var(--muted); font-size: 19px; max-width: 560px; }
+  nav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+  nav a { color: var(--ink); text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 99px; background: var(--chip); }
+  nav a:hover { background: var(--line); }
+  section.app { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 28px; margin: 0 0 24px; box-shadow: var(--shadow); scroll-margin-top: 20px; }
+  .head { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+  .head img { width: 68px; height: 68px; border-radius: 16px; flex: none; box-shadow: 0 0 0 1px var(--line); }
+  .head .t { flex: 1 1 260px; min-width: 0; }
+  .head h2 { font-size: 26px; letter-spacing: -.015em; line-height: 1.15; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .chip { font-size: 12.5px; color: var(--muted); background: var(--chip); padding: 2px 10px; border-radius: 99px; }
+  .desc { margin: 18px 0 20px; color: var(--muted); max-width: 680px; }
+  .btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; font-weight: 600; font-size: 15px; padding: 10px 18px; border-radius: 12px; border: 1px solid var(--line); color: var(--ink); background: transparent; }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+  .btn.soon { color: var(--muted); border-style: dashed; cursor: default; }
+  .btn:not(.soon):hover { filter: brightness(.95); }
+  .shots { display: flex; gap: 14px; margin-top: 24px; overflow-x: auto; padding-bottom: 8px; scroll-snap-type: x proximity; }
+  .shots img { height: 380px; width: auto; border-radius: 14px; border: 1px solid var(--line); flex: none; scroll-snap-align: start; background: var(--chip); }
+  .shots.wide img { height: auto; width: min(100%, 640px); }
+  .shots.phone img { height: 440px; }
+
+  .demo { margin-top: 24px; border: 1px solid var(--line); border-radius: 16px; background: var(--chip); overflow: hidden; max-width: 720px; }
+  .demo-bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+  .demo-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); display: inline-block; }
+  .demo-bar b { margin-left: 6px; font-weight: 600; color: var(--ink); }
+  .demo-status { margin-left: auto; font-size: 12px; padding: 2px 10px; border-radius: 99px; background: var(--card); border: 1px solid var(--line); transition: color .3s, border-color .3s; }
+  .demo-status.on { color: var(--accent); border-color: var(--accent); }
+  .demo ul { list-style: none; padding: 8px; }
+  .demo li { display: flex; align-items: center; gap: 12px; padding: 9px 10px; border-radius: 10px; font-size: 14.5px; min-height: 42px; }
+  .demo li .thumb { width: 26px; height: 20px; border-radius: 4px; flex: none; background: linear-gradient(135deg, var(--accent), #9bb0ff); opacity: .55; transition: opacity .4s; }
+  .demo li .name { font-variant-ligatures: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: opacity .25s, color .4s; }
+  .demo li.messy .name { color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
+  .demo li.neat { background: var(--card); }
+  .demo li.neat .thumb { opacity: 1; }
+  .demo li.neat .name { color: var(--ink); font-weight: 600; }
+  .demo li.swap .name { opacity: 0; }
+  .demo-cap { padding: 10px 16px 14px; font-size: 13px; color: var(--muted); }
+  footer { padding: 28px 0 80px; color: var(--muted); font-size: 14px; }
+  footer a { color: inherit; }
+  @media (max-width: 560px) { section.app { padding: 20px; border-radius: 20px; } .shots img { height: 320px; } .shots.phone img { height: 380px; } .shots.wide img { width: 88%; height: auto; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Hayat Ayubi Portfolio</h1>
+    <p>Apps I’ve built for Mac and iPhone: email, TV, window management, flashcards and more.</p>
+    <nav>
+      <a href="#tern">Tern</a><a href="#lumen">Lumen</a><a href="#tidyshot">TidyShot</a><a href="#pane">Pane</a><a href="#flashcraft">Flashcraft</a><a href="#focuslist">Focus List</a><a href="#calendarwidget">CalendarWidget</a>
+    </nav>
+  </header>
+
+  <section class="app" id="tern">
+    <div class="head">
+      <img src="img/icon-tern.png" alt="">
+      <div class="t"><h2>Tern</h2><div class="chips"><span class="chip">Mac 1.2.3</span><span class="chip">iPhone</span><span class="chip">Email</span></div></div>
+    </div>
+    <p class="desc">A keyboard-first email app for Gmail and iCloud. Mail is split into what needs a reply and what’s just FYI, newsletters get their own quiet place, and smart drafting runs entirely on your device.</p>
+    <div class="btns">
+      <a class="btn primary" href="https://github.com/tern-inbox/tern/releases/latest">Download for Mac</a>
+      <a class="btn" href="https://tern-inbox.github.io">Website</a>
+      <span class="btn soon">iPhone: in App Store review</span>
+    </div>
+    <div class="shots phone">
+      <img src="img/tern-1-needs-reply.png" alt="Tern: needs reply" loading="lazy">
+      <img src="img/tern-2-fyi.png" alt="Tern: FYI" loading="lazy">
+      <img src="img/tern-3-invite.png" alt="Tern: calendar invite" loading="lazy">
+      <img src="img/tern-4-reader.png" alt="Tern: reading an email" loading="lazy">
+      <img src="img/tern-5-reply.png" alt="Tern: reply" loading="lazy">
+      <img src="img/tern-6-newsletters.png" alt="Tern: newsletters" loading="lazy">
+    </div>
+  </section>
+
+  <section class="app" id="lumen">
+    <div class="head">
+      <img src="img/icon-lumen.png" alt="">
+      <div class="t"><h2>Lumen</h2><div class="chips"><span class="chip">Mac 1.0</span><span class="chip">Android 0.9.4</span><span class="chip">iOS</span><span class="chip">IPTV player</span></div></div>
+    </div>
+    <p class="desc">A clean IPTV player with live TV, a TV guide, movies, series and a favourites row, designed to feel like a streaming app on the big screen.</p>
+    <div class="btns">
+      <a class="btn primary" href="https://github.com/lumen-tv/Lumen-TV/releases/tag/mac">Download for Mac</a>
+      <a class="btn" href="https://github.com/lumen-tv/Lumen-TV/releases/latest">Android APK</a>
+      <a class="btn" href="https://github.com/lumen-tv/Lumen-TV">GitHub</a>
+    </div>
+    <div class="shots wide"><img src="img/lumen-mac-1.jpg" alt="Lumen on Mac: Live TV home with favourites" loading="lazy"></div>
+  </section>
+
+  <section class="app" id="tidyshot">
+    <div class="head">
+      <img src="img/icon-tidyshot.png" alt="">
+      <div class="t"><h2>TidyShot</h2><div class="chips"><span class="chip">Mac 0.1.1</span><span class="chip">Menu bar</span></div></div>
+    </div>
+    <p class="desc">Automatically gives screenshots and downloads meaningful names. It reads what’s in the image with Apple’s on-device intelligence, so nothing leaves your Mac and there’s nothing to configure.</p>
+    <div class="btns">
+      <a class="btn primary" href="https://github.com/hayatayubi/tidyshot/releases/latest">Download for Mac</a>
+      <a class="btn" href="https://github.com/hayatayubi/tidyshot">GitHub</a>
+    </div>
+    <div class="demo" id="tidydemo" aria-label="Animation: messy screenshot names becoming descriptive names">
+      <div class="demo-bar"><i></i><i></i><i></i><b>Screenshots</b><span class="demo-status" id="tidystatus">Waiting…</span></div>
+      <ul id="tidylist"></ul>
+      <div class="demo-cap">TidyShot reads each new screenshot on your Mac and renames it, so Desktop stops looking like this.</div>
+    </div>
+  </section>
+
+  <section class="app" id="pane">
+    <div class="head">
+      <img src="img/icon-pane.png" alt="">
+      <div class="t"><h2>Pane</h2><div class="chips"><span class="chip">Mac 0.1.5</span><span class="chip">Menu bar</span><span class="chip">Window management</span></div></div>
+    </div>
+    <p class="desc">Snap, move and resize windows with drags and hotkeys. A lightweight window manager that stays out of the way, with a per-app exclusion list.</p>
+    <div class="btns">
+      <a class="btn primary" href="https://github.com/hayatayubi/pane/releases/latest">Download for Mac</a>
+      <a class="btn" href="https://github.com/hayatayubi/pane">GitHub</a>
+    </div>
+    <div class="shots"><img src="img/pane-settings.jpg" alt="Pane settings window" loading="lazy" style="height:440px"></div>
+  </section>
+
+  <section class="app" id="flashcraft">
+    <div class="head">
+      <img src="img/icon-flashcraft.png" alt="">
+      <div class="t"><h2>Flashcraft</h2><div class="chips"><span class="chip">Mac 1.1.5</span><span class="chip">Flashcards</span></div></div>
+    </div>
+    <p class="desc">Build a deck, add cards, then study. A calm flashcard app with spaced review and nothing else in the way.</p>
+    <div class="btns">
+      <a class="btn primary" href="https://github.com/hayatayubi/flashcraft/releases/latest">Download for Mac</a>
+      <a class="btn" href="https://github.com/hayatayubi/flashcraft">GitHub</a>
+    </div>
+    <div class="shots wide"><img src="img/flashcraft-1.jpg" alt="Flashcraft deck list" loading="lazy"></div>
+  </section>
+
+  <section class="app" id="focuslist">
+    <div class="head">
+      <img src="img/icon-focuslist.png" alt="">
+      <div class="t"><h2>Focus List</h2><div class="chips"><span class="chip">iPhone</span><span class="chip">SwiftUI</span><span class="chip">To-do list</span></div></div>
+    </div>
+    <p class="desc">A simple, modern to-do list with priorities, work and home categories, due dates, reminders and subtasks with progress tracking.</p>
+    <div class="btns">
+      <a class="btn" href="https://github.com/hayatayubi/focuslist">Source on GitHub</a>
+      <span class="btn soon">App Store: coming soon</span>
+    </div>
+    <div class="shots phone">
+      <img src="img/focuslist-list.jpg" alt="Focus List task list" loading="lazy">
+      <img src="img/focuslist-new-task.jpg" alt="Focus List new task screen" loading="lazy">
+    </div>
+  </section>
+
+  <section class="app" id="calendarwidget">
+    <div class="head">
+      <img src="img/icon-calendar.png" alt="">
+      <div class="t"><h2>CalendarWidget</h2><div class="chips"><span class="chip">iPhone</span><span class="chip">WidgetKit</span></div></div>
+    </div>
+    <p class="desc">A minimalist home-screen widget for your upcoming calendar events: plain type, generous whitespace, light or dark, tap to open Calendar.</p>
+    <div class="btns"><span class="btn soon">App Store: coming soon</span></div>
+    <div class="shots">
+      <img src="img/calendarwidget-widget.png" alt="CalendarWidget showing upcoming events" loading="lazy" style="height:260px">
+      <img src="img/calendarwidget-home.jpg" alt="CalendarWidget on the iPhone home screen" loading="lazy">
+    </div>
+  </section>
+
+  <footer>© 2026 Hayat Ayubi. Downloads are signed and notarised by Apple where applicable.</footer>
+</div>
+
+<script>
+(function () {
+  var rows = [
+    ["Screenshot 2026-11-09 at 15.49.12.png", "Receipt – Pret lunch £8.40.png"],
+    ["Screenshot 2026-11-09 at 15.51.03.png", "Error – Xcode build failed.png"],
+    ["Screen Shot 2026-11-08 at 21.07.44.png", "Chat – Dinner plans with Sam.png"],
+    ["Screenshot 2026-11-08 at 09.12.30.png", "Invoice – Amazon order 4821.png"],
+    ["Untitled 2.png", "Code – Swift ForEach example.png"]
+  ];
+  var list = document.getElementById('tidylist'), status = document.getElementById('tidystatus');
+  if (!list) return;
+  var lis = rows.map(function (r) {
+    var li = document.createElement('li'); li.className = 'messy';
+    li.innerHTML = '<span class="thumb"></span><span class="name"></span>';
+    li.querySelector('.name').textContent = r[0]; list.appendChild(li); return li;
+  });
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+  function setNeat(i) { lis[i].className = 'neat'; lis[i].querySelector('.name').textContent = rows[i][1]; }
+  function setMessy(i) { lis[i].className = 'messy'; lis[i].querySelector('.name').textContent = rows[i][0]; }
+  if (reduce) { rows.forEach(function (_, i) { setNeat(i); }); status.textContent = 'Renamed'; return; }
+  async function rename(i) {
+    var li = lis[i]; li.classList.add('swap'); await sleep(250);
+    li.querySelector('.name').textContent = rows[i][1]; li.className = 'neat swap'; await sleep(30);
+    li.classList.remove('swap');
+  }
+  var running = false;
+  async function loop() {
+    if (running) return; running = true;
+    while (true) {
+      rows.forEach(function (_, i) { setMessy(i); });
+      status.className = 'demo-status'; status.textContent = 'Waiting…'; await sleep(1800);
+      status.className = 'demo-status on'; status.textContent = 'TidyShot is renaming…';
+      for (var i = 0; i < rows.length; i++) { await sleep(650); await rename(i); }
+      status.textContent = 'All renamed'; await sleep(3200);
+    }
+  }
+  var box = document.getElementById('tidydemo');
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (e, o) { if (e[0].isIntersecting) { loop(); o.disconnect(); } }, { threshold: .3 }).observe(box);
+  } else { loop(); }
+})();
+</script>
+</body>
+</html>
