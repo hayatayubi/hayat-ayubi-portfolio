@@ -47,6 +47,37 @@
   .tile .arrow { margin-left: auto; width: 32px; height: 32px; border-radius: 50%; background: var(--chip); display: grid; place-items: center; flex: none; transition: background .3s, color .3s, transform .3s; }
   .tile:hover .arrow { background: var(--accent); color: var(--accent-ink); transform: translateX(3px); }
 
+
+  /* Mini covers */
+  .cover .mini { position: absolute; inset: 0; display: grid; place-items: center; }
+  .m-card { width: 84%; background: var(--card); border-radius: 16px; box-shadow: 0 18px 44px rgba(0,0,0,.28); padding: 8px; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+  .tile:hover .m-card { transform: translateY(-6px) scale(1.02); }
+  .m-card .bar { display: flex; gap: 5px; padding: 4px 6px 8px; } .m-card .bar i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+  .m-row { display: flex; align-items: center; gap: 10px; padding: 8px 9px; border-radius: 9px; font-size: 12.5px; min-height: 36px; transition: background .4s; }
+  .m-row .t { width: 22px; height: 17px; border-radius: 4px; flex: none; background: linear-gradient(135deg, #7c99ff, #9a7bff); opacity: .5; transition: opacity .4s; }
+  .m-row .n { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: opacity .22s; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; }
+  .m-row.neat { background: var(--chip); } .m-row.neat .t { opacity: 1; } .m-row.neat .n { color: var(--ink); font-family: inherit; font-size: 12.5px; font-weight: 650; }
+  .m-row.swap .n { opacity: 0; }
+  .cover .pane-demo { position: absolute; left: 50%; top: 50%; width: 86%; transform: translate(-50%, -50%); box-shadow: 0 18px 44px rgba(0,0,0,.28); transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+  .tile:hover .cover .pane-demo { transform: translate(-50%, -53%) scale(1.02); }
+  .fc-stage { perspective: 900px; width: 62%; aspect-ratio: 1.55; position: relative; }
+  .fc-back, .fc { position: absolute; inset: 0; border-radius: 18px; }
+  .fc-back { background: rgba(255,255,255,.55); transform: rotate(-7deg) translate(-6%, 4%); box-shadow: 0 10px 30px rgba(0,0,0,.15); }
+  .fc-back.two { background: rgba(255,255,255,.35); transform: rotate(6deg) translate(7%, 2%); }
+  .fc { transform-style: preserve-3d; transition: transform .8s cubic-bezier(.4,.1,.2,1); }
+  .fc.flip { transform: rotateY(180deg); }
+  .fc .face { position: absolute; inset: 0; border-radius: 18px; background: #fffafc; box-shadow: 0 18px 44px rgba(0,0,0,.3); backface-visibility: hidden; -webkit-backface-visibility: hidden; padding: 16px 18px; display: flex; flex-direction: column; justify-content: center; color: #3c1b30; }
+  .fc .face small { font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: #c9559a; font-weight: 700; margin-bottom: 8px; }
+  .fc .face b { font-size: clamp(14px, 1.7vw, 17px); line-height: 1.25; letter-spacing: -.01em; }
+  .fc .face.ans { transform: rotateY(180deg); }
+  .tile:hover .fc-stage { transform: scale(1.04); } .fc-stage { transition: transform .4s; }
+  .phones .pf { position: absolute; top: 24px; height: 118%; aspect-ratio: 1206 / 2622; border-radius: 26px; border: 5px solid #15161a; background: #15161a; overflow: hidden; box-shadow: 0 20px 46px rgba(0,0,0,.34); transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+  .phones .pf img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .phones .pf.l { left: 17%; transform: rotate(-6deg); } .phones .pf.r { left: 46%; top: 44px; transform: rotate(5deg); }
+  .tile:hover .phones .pf.l { transform: rotate(-8deg) translateY(-8px); } .tile:hover .phones .pf.r { transform: rotate(7deg) translateY(-8px); }
+  .wbg { position: absolute; inset: -12%; width: 124%; height: 124%; object-fit: cover; filter: blur(14px) saturate(1.15); }
+  .wfront { position: relative; width: 78%; clip-path: inset(1.6% 2.4% 2.8% 1.2% round 4.6% / 9%); filter: drop-shadow(0 18px 26px rgba(0,0,0,.35)); transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+  .tile:hover .wfront { transform: translateY(-6px) scale(1.04); }
   footer { padding: 0 0 60px; color: var(--muted); font-size: 14px; }
 
   /* Showcase overlay */
@@ -158,29 +189,29 @@
       chips: ['Mac 0.1.1', 'Menu bar'],
       desc: 'Automatically gives screenshots and downloads meaningful names. It reads what’s in the image with Apple’s on-device intelligence, so nothing leaves your Mac and there’s nothing to configure.',
       btns: [['Download for Mac', 'https://github.com/hayatayubi/tidyshot/releases/latest', 1], ['GitHub', 'https://github.com/hayatayubi/tidyshot']],
-      cover: { icon: true }, media: [{ demo: 'tidy' }] },
+      cover: { mini: 'tidy' }, media: [{ demo: 'tidy' }] },
     { id: 'pane', name: 'Pane', tag: 'Window snapping', icon: 'icon-pane.png', c1: '#9ad0ff', c2: '#6b8cff',
       chips: ['Mac 0.1.5', 'Menu bar', 'Window management'],
       desc: 'Snap, move and resize windows with drags and hotkeys. A lightweight window manager that stays out of the way, with a per-app exclusion list.',
       btns: [['Download for Mac', 'https://github.com/hayatayubi/pane/releases/latest', 1], ['GitHub', 'https://github.com/hayatayubi/pane']],
-      cover: { icon: true }, media: [{ demo: 'pane' }] },
+      cover: { mini: 'pane' }, media: [{ demo: 'pane' }] },
     { id: 'flashcraft', name: 'Flashcraft', tag: 'Calm flashcards', icon: 'icon-flashcraft.png', c1: '#ffc6e0', c2: '#e0589a',
       chips: ['Mac 1.1.5', 'Flashcards'],
       desc: 'Build a deck, add cards, then study. A calm flashcard app with spaced review and nothing else in the way.',
       btns: [['Download for Mac', 'https://github.com/hayatayubi/flashcraft/releases/latest', 1], ['GitHub', 'https://github.com/hayatayubi/flashcraft']],
-      cover: { src: 'flashcraft-decks.jpg', cls: '' },
+      cover: { mini: 'flash' },
       media: [{ k: 'land', s: ['flashcraft-decks.jpg', 'flashcraft-deck.jpg', 'flashcraft-question.jpg', 'flashcraft-answer.jpg', 'flashcraft-themes.jpg'] }] },
     { id: 'focuslist', name: 'Focus List', tag: 'Simple to-do list', icon: 'icon-focuslist.png', c1: '#c9d9ff', c2: '#9a7bff', w3: true,
       chips: ['iPhone', 'SwiftUI', 'To-do list'],
       desc: 'A simple, modern to-do list with priorities, work and home categories, due dates, reminders and subtasks with progress tracking.',
       btns: [['Source on GitHub', 'https://github.com/hayatayubi/focuslist', 1], ['App Store: coming soon', null]],
-      cover: { src: 'focuslist-list.jpg', cls: 'phone' },
+      cover: { mini: 'phones' },
       media: [{ k: 'phone', s: ['focuslist-list.jpg', 'focuslist-new-task.jpg'] }] },
     { id: 'calendarwidget', name: 'CalendarWidget', tag: 'Minimal calendar widget', icon: 'icon-calendar.png', c1: '#dfe6f5', c2: '#9db3e6', w3: true,
       chips: ['iPhone', 'WidgetKit'],
       desc: 'A minimalist home-screen widget for your upcoming calendar events: plain type, generous whitespace, light or dark, tap to open Calendar.',
       btns: [['App Store: coming soon', null]],
-      cover: { src: 'calendarwidget-widget.png', cls: 'widget' },
+      cover: { mini: 'widget' },
       media: [{ k: 'widget', s: ['calendarwidget-widget.png'] }, { k: 'phone', s: ['calendarwidget-home.jpg'] }] }
   ];
 
@@ -192,13 +223,45 @@
     var b = document.createElement('button');
     b.className = 'tile' + (a.w3 ? ' w3' : ''); b.type = 'button';
     b.style.setProperty('--c1', a.c1); b.style.setProperty('--c2', a.c2);
-    var cover = a.cover.icon ? '<img class="big-icon" src="' + I(a.icon) + '" alt="">' : '<img class="shot ' + (a.cover.cls || '') + '" src="' + I(a.cover.src) + '" alt="" loading="lazy">';
+    var cover = a.cover.mini ? '' : '<img class="shot ' + (a.cover.cls || '') + '" src="' + I(a.cover.src) + '" alt="" loading="lazy">';
     b.innerHTML = '<div class="cover">' + cover + '</div><div class="meta"><img src="' + I(a.icon) + '" alt=""><div><h3></h3><p></p></div><span class="arrow" aria-hidden="true">→</span></div>';
     b.querySelector('h3').textContent = a.name; b.querySelector('p').textContent = a.tag;
     b.setAttribute('aria-label', 'Open ' + a.name);
     b.addEventListener('click', function () { openApp(i); });
+    if (a.cover.mini) buildMini(a.cover.mini, b.querySelector('.cover'));
     grid.appendChild(b);
   });
+
+  /* ---- Tile covers ---- */
+  function visibleFlag(el) { var o = { v: true }; if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { o.v = e[0].isIntersecting; }).observe(el); return o; }
+  function buildMini(kind, cover) {
+    var box = document.createElement('div'); box.className = 'mini ' + kind; cover.appendChild(box); var vis = visibleFlag(cover);
+    function sl(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+    if (kind === 'tidy') {
+      var rows = [['Screenshot 2026-11-09 at 15.49.12.png', 'Receipt – Pret lunch £8.40.png'], ['Screen Shot 2026-11-08 at 21.07.44.png', 'Chat – Dinner plans with Sam.png'], ['Untitled 2.png', 'Error – Xcode build failed.png'], ['Screenshot 2026-11-08 at 09.12.30.png', 'Invoice – Amazon order 4821.png']];
+      box.innerHTML = '<div class="m-card"><div class="bar"><i></i><i></i><i></i></div></div>';
+      var card = box.firstChild, els = rows.map(function (r) { var d = document.createElement('div'); d.className = 'm-row'; d.innerHTML = '<span class="t"></span><span class="n"></span>'; d.querySelector('.n').textContent = r[0]; card.appendChild(d); return d; });
+      if (reduce) { els.forEach(function (d, i) { d.className = 'm-row neat'; d.querySelector('.n').textContent = rows[i][1]; }); return; }
+      (async function () { while (true) {
+        els.forEach(function (d, i) { d.className = 'm-row'; d.querySelector('.n').textContent = rows[i][0]; }); await sl(1400);
+        for (var i = 0; i < els.length; i++) { while (!vis.v) await sl(400); await sl(520); els[i].classList.add('swap'); await sl(220); els[i].querySelector('.n').textContent = rows[i][1]; els[i].className = 'm-row neat swap'; await sl(30); els[i].classList.remove('swap'); }
+        await sl(2600); while (!vis.v) await sl(400);
+      } })();
+    } else if (kind === 'pane') {
+      cover.removeChild(box); cover.appendChild(paneDemo().el);
+    } else if (kind === 'flash') {
+      var qa = [['What are the three elements of a valid contract?', 'Offer, acceptance and consideration.'], ['Which organelle produces most of the cell’s ATP?', 'The mitochondrion.'], ['How do you say “the bill, please”?', 'La cuenta, por favor.']];
+      box.innerHTML = '<div class="fc-stage"><div class="fc-back two"></div><div class="fc-back"></div><div class="fc"><div class="face"><small>Question</small><b></b></div><div class="face ans"><small>Answer</small><b></b></div></div></div>';
+      var fc = box.querySelector('.fc'), q = fc.querySelector('.face:not(.ans) b'), an = fc.querySelector('.ans b'), n = 0;
+      function setQA() { q.textContent = qa[n][0]; an.textContent = qa[n][1]; } setQA();
+      if (reduce) return;
+      (async function () { while (true) { await sl(2300); while (!vis.v) await sl(400); fc.classList.add('flip'); await sl(2700); fc.classList.remove('flip'); await sl(500); n = (n + 1) % qa.length; setQA(); } })();
+    } else if (kind === 'phones') {
+      box.className = 'mini phones'; box.innerHTML = '<div class="pf l"><img src="' + I('focuslist-list.jpg') + '" alt="" loading="lazy"></div><div class="pf r"><img src="' + I('focuslist-new-task.jpg') + '" alt="" loading="lazy"></div>';
+    } else if (kind === 'widget') {
+      box.innerHTML = '<img class="wbg" src="' + I('calendarwidget-home.jpg') + '" alt="" loading="lazy"><img class="wfront" src="' + I('calendarwidget-widget.png') + '" alt="" loading="lazy">';
+    }
+  }
 
   /* ---- Demos ---- */
   function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
