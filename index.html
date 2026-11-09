@@ -4,63 +4,106 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hayat Ayubi Portfolio</title>
-<meta name="description" content="Mac and iPhone apps built by Hayat Ayubi: Tern, Lumen, TidyShot, Pane, Flashcraft, Focus List and CalendarWidget.">
 <style>
   :root {
-    --bg: #fbfaf8; --card: #ffffff; --ink: #16181d; --muted: #6a6f7a; --line: #e8e6e1;
-    --accent: #2f5bea; --accent-ink: #ffffff; --chip: #f0eee9; --shadow: 0 1px 2px rgba(0,0,0,.04), 0 12px 32px rgba(20,20,30,.06);
+    --bg: #f6f4ef; --card: #ffffff; --ink: #14161b; --muted: #6b707c; --line: #e6e3dc; --chip: #efece5;
+    --accent: #2f5bea; --accent-ink: #fff; --shadow: 0 1px 2px rgba(20,20,30,.05), 0 18px 40px rgba(20,20,30,.08);
+    --glow1: #cfdcff; --glow2: #ffd9c7; --glow3: #d8f3e6;
   }
   @media (prefers-color-scheme: dark) {
-    :root { --bg: #0e0f12; --card: #16181d; --ink: #f2f2f0; --muted: #9a9fab; --line: #262932; --accent: #6b8cff; --accent-ink: #0e0f12; --chip: #20232b; --shadow: none; }
+    :root { --bg: #0d0e11; --card: #17191f; --ink: #f2f1ee; --muted: #9a9fab; --line: #262932; --chip: #20232b;
+      --accent: #7c99ff; --accent-ink: #0d0e11; --shadow: none; --glow1: #1b2a5c; --glow2: #4a2a22; --glow3: #14382c; }
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--ink); font: 16px/1.5 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Inter, Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
-  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
-  header { padding: 72px 0 36px; }
-  header h1 { font-size: clamp(34px, 6vw, 56px); line-height: 1.05; letter-spacing: -.025em; font-weight: 750; }
-  header p { margin-top: 14px; color: var(--muted); font-size: 19px; max-width: 560px; }
-  nav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
-  nav a { color: var(--ink); text-decoration: none; font-size: 14px; padding: 6px 12px; border-radius: 99px; background: var(--chip); }
-  nav a:hover { background: var(--line); }
-  section.app { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 28px; margin: 0 0 24px; box-shadow: var(--shadow); scroll-margin-top: 20px; }
-  .head { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
-  .head img { width: 68px; height: 68px; border-radius: 16px; flex: none; box-shadow: 0 0 0 1px var(--line); }
-  .head .t { flex: 1 1 260px; min-width: 0; }
-  .head h2 { font-size: 26px; letter-spacing: -.015em; line-height: 1.15; }
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-  .chip { font-size: 12.5px; color: var(--muted); background: var(--chip); padding: 2px 10px; border-radius: 99px; }
-  .desc { margin: 18px 0 20px; color: var(--muted); max-width: 680px; }
-  .btns { display: flex; flex-wrap: wrap; gap: 10px; }
-  .btn { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; font-weight: 600; font-size: 15px; padding: 10px 18px; border-radius: 12px; border: 1px solid var(--line); color: var(--ink); background: transparent; }
-  .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
-  .btn.soon { color: var(--muted); border-style: dashed; cursor: default; }
-  .btn:not(.soon):hover { filter: brightness(.95); }
-  .shots { display: flex; gap: 14px; margin-top: 24px; overflow-x: auto; padding-bottom: 8px; scroll-snap-type: x proximity; }
-  .shots img { height: 380px; width: auto; border-radius: 14px; border: 1px solid var(--line); flex: none; scroll-snap-align: start; background: var(--chip); }
-  .shots.wide img { height: auto; width: min(100%, 640px); }
-  .shots.phone img { height: 440px; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font: 16px/1.5 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Inter, Roboto, sans-serif; -webkit-font-smoothing: antialiased; min-height: 100vh; overflow-x: hidden; }
+  body.locked { overflow: hidden; }
+  .glow { position: fixed; inset: -20vmax; z-index: -1; pointer-events: none;
+    background: radial-gradient(40vmax 40vmax at 15% 10%, var(--glow1), transparent 60%), radial-gradient(35vmax 35vmax at 90% 20%, var(--glow2), transparent 60%), radial-gradient(40vmax 40vmax at 60% 100%, var(--glow3), transparent 60%); opacity: .75; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
 
-  .demo { margin-top: 24px; border: 1px solid var(--line); border-radius: 16px; background: var(--chip); overflow: hidden; max-width: 720px; }
+  header { padding: clamp(48px, 9vh, 100px) 0 32px; }
+  header h1 { font-size: clamp(40px, 8vw, 88px); line-height: 1; letter-spacing: -.035em; font-weight: 780; }
+
+  .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; padding-bottom: 72px; }
+  .tile { grid-column: span 2; position: relative; text-align: left; font: inherit; color: inherit; cursor: pointer; border: 1px solid var(--line); background: var(--card); border-radius: 26px; overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow); transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s; min-height: 360px; opacity: 0; transform: translateY(18px); animation: rise .7s cubic-bezier(.2,.8,.2,1) forwards; }
+  .tile:nth-child(1) { animation-delay: .05s } .tile:nth-child(2) { animation-delay: .12s } .tile:nth-child(3) { animation-delay: .19s } .tile:nth-child(4) { animation-delay: .26s } .tile:nth-child(5) { animation-delay: .33s } .tile:nth-child(6) { animation-delay: .4s } .tile:nth-child(7) { animation-delay: .47s }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+  .tile.w3 { grid-column: span 3; }
+  .tile:hover { transform: translateY(-6px); box-shadow: 0 30px 60px rgba(20,20,30,.16); }
+  .tile:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .tile .cover { flex: 1; min-height: 210px; position: relative; overflow: hidden; background: linear-gradient(135deg, var(--c1), var(--c2)); }
+  .tile .cover img.shot { position: absolute; left: 50%; top: 22px; width: 88%; transform: translateX(-50%); border-radius: 12px; box-shadow: 0 14px 40px rgba(0,0,0,.28); transition: transform .5s cubic-bezier(.2,.8,.2,1); object-fit: cover; object-position: top; height: 100%; }
+  .tile .cover img.shot.phone { width: auto; height: 120%; max-width: 46%; top: 24px; }
+  .tile .cover img.shot.widget { width: 82%; height: auto; top: 50%; transform: translate(-50%, -50%); }
+  .tile:hover .cover img.shot { transform: translateX(-50%) translateY(-6px) scale(1.02); }
+  .tile:hover .cover img.shot.widget { transform: translate(-50%, -52%) scale(1.03); }
+  .tile .cover .big-icon { position: absolute; left: 50%; top: 50%; width: 96px; height: 96px; transform: translate(-50%, -50%); border-radius: 24px; box-shadow: 0 16px 40px rgba(0,0,0,.25); transition: transform .4s; }
+  .tile:hover .cover .big-icon { transform: translate(-50%, -54%) scale(1.06); }
+  .tile .meta { padding: 18px 20px 20px; display: flex; gap: 14px; align-items: center; }
+  .tile .meta img { width: 46px; height: 46px; border-radius: 11px; box-shadow: 0 0 0 1px var(--line); flex: none; }
+  .tile .meta h3 { font-size: 19px; letter-spacing: -.01em; line-height: 1.2; }
+  .tile .meta p { font-size: 14px; color: var(--muted); line-height: 1.35; margin-top: 2px; }
+  .tile .arrow { margin-left: auto; width: 32px; height: 32px; border-radius: 50%; background: var(--chip); display: grid; place-items: center; flex: none; transition: background .3s, color .3s, transform .3s; }
+  .tile:hover .arrow { background: var(--accent); color: var(--accent-ink); transform: translateX(3px); }
+
+  footer { padding: 0 0 60px; color: var(--muted); font-size: 14px; }
+
+  /* Showcase overlay */
+  .sc { position: fixed; inset: 0; z-index: 50; background: var(--bg); display: none; overflow-y: auto; overscroll-behavior: contain; }
+  .sc.open { display: block; animation: scin .45s cubic-bezier(.2,.8,.2,1); }
+  @keyframes scin { from { opacity: 0; transform: translateY(40px) scale(.98); } to { opacity: 1; transform: none; } }
+  .sc .glow2 { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(60vmax 40vmax at 80% 0%, var(--c1), transparent 70%); opacity: .35; }
+  .sc-in { position: relative; max-width: 1240px; margin: 0 auto; padding: 24px 20px 60px; min-height: 100%; display: grid; grid-template-columns: minmax(280px, 380px) 1fr; gap: 40px; align-items: start; }
+  .sc-top { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; }
+  .sc-btn { font: inherit; font-size: 14px; font-weight: 600; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 99px; padding: 8px 16px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+  .sc-btn:hover { background: var(--chip); }
+  .sc-nav { margin-left: auto; display: flex; gap: 8px; }
+  .sc-side { position: sticky; top: 24px; padding-top: 12px; }
+  .sc-side .icon { width: 84px; height: 84px; border-radius: 21px; box-shadow: 0 0 0 1px var(--line), 0 14px 30px rgba(0,0,0,.15); }
+  .sc-side h2 { font-size: clamp(34px, 5vw, 48px); letter-spacing: -.03em; line-height: 1.05; margin-top: 20px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .chip { font-size: 12.5px; color: var(--muted); background: var(--chip); padding: 3px 11px; border-radius: 99px; }
+  .sc-side .desc { color: var(--muted); font-size: 17px; margin: 18px 0 24px; }
+  .btns { display: flex; flex-direction: column; gap: 10px; }
+  .btn { display: flex; align-items: center; justify-content: center; text-align: center; text-decoration: none; font-weight: 650; font-size: 15px; padding: 13px 18px; border-radius: 14px; border: 1px solid var(--line); color: var(--ink); background: var(--card); }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+  .btn.soon { color: var(--muted); border-style: dashed; background: transparent; }
+  a.btn:hover { filter: brightness(.96); }
+  .sc-media { min-width: 0; padding-top: 12px; }
+  .stage { position: relative; }
+  .track { display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 4px 2px 14px; align-items: center; }
+  .track::-webkit-scrollbar { display: none; }
+  .slide { flex: none; scroll-snap-align: center; border-radius: 16px; overflow: hidden; }
+  .slide img { display: block; border-radius: 16px; border: 1px solid var(--line); background: var(--chip); }
+  .slide.land img { height: min(60vh, 560px); width: auto; max-width: 100%; }
+  .slide.phone img { height: min(66vh, 620px); width: auto; }
+  .slide.widget img { height: min(40vh, 300px); width: auto; }
+  .slide.demo { width: min(100%, 760px); }
+  .ctrl { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+  .ctrl .count { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; margin-right: auto; }
+  .cbtn { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; display: grid; place-items: center; font-size: 18px; }
+  .cbtn:hover { background: var(--chip); } .cbtn:disabled { opacity: .35; cursor: default; }
+  .group-label { font-size: 12.5px; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); font-weight: 600; margin: 0 0 8px 2px; }
+
+  /* Demos */
+  .demo-box { border: 1px solid var(--line); border-radius: 16px; background: var(--chip); overflow: hidden; width: min(100%, 720px); }
   .demo-bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--muted); }
   .demo-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); display: inline-block; }
   .demo-bar b { margin-left: 6px; font-weight: 600; color: var(--ink); }
   .demo-status { margin-left: auto; font-size: 12px; padding: 2px 10px; border-radius: 99px; background: var(--card); border: 1px solid var(--line); transition: color .3s, border-color .3s; }
   .demo-status.on { color: var(--accent); border-color: var(--accent); }
-  .demo ul { list-style: none; padding: 8px; }
-  .demo li { display: flex; align-items: center; gap: 12px; padding: 9px 10px; border-radius: 10px; font-size: 14.5px; min-height: 42px; }
-  .demo li .thumb { width: 26px; height: 20px; border-radius: 4px; flex: none; background: linear-gradient(135deg, var(--accent), #9bb0ff); opacity: .55; transition: opacity .4s; }
-  .demo li .name { font-variant-ligatures: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: opacity .25s, color .4s; }
-  .demo li.messy .name { color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
-  .demo li.neat { background: var(--card); }
-  .demo li.neat .thumb { opacity: 1; }
-  .demo li.neat .name { color: var(--ink); font-weight: 600; }
-  .demo li.swap .name { opacity: 0; }
+  .demo-box ul { list-style: none; padding: 8px; }
+  .demo-box li { display: flex; align-items: center; gap: 12px; padding: 9px 10px; border-radius: 10px; font-size: 15px; min-height: 44px; }
+  .demo-box li .thumb { width: 26px; height: 20px; border-radius: 4px; flex: none; background: linear-gradient(135deg, var(--accent), #9bb0ff); opacity: .55; transition: opacity .4s; }
+  .demo-box li .name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: opacity .25s, color .4s; }
+  .demo-box li.messy .name { color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
+  .demo-box li.neat { background: var(--card); } .demo-box li.neat .thumb { opacity: 1; } .demo-box li.neat .name { color: var(--ink); font-weight: 600; }
+  .demo-box li.swap .name { opacity: 0; }
   .demo-cap { padding: 10px 16px 14px; font-size: 13px; color: var(--muted); }
-  .shots.land img { height: 300px; width: auto; }
-  .shots-label { margin-top: 20px; font-size: 13px; color: var(--muted); font-weight: 600; letter-spacing: .02em; }
-  .pane-demo { position: relative; margin-top: 24px; max-width: 720px; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: linear-gradient(135deg, #cfe0ff, #f3d9ff 55%, #ffe3d1); }
+  .pane-demo { position: relative; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: linear-gradient(135deg, #cfe0ff, #f3d9ff 55%, #ffe3d1); }
   @media (prefers-color-scheme: dark) { .pane-demo { background: linear-gradient(135deg, #1b2a52, #3a2655 55%, #51332b); } }
-  .pane-menubar { position: absolute; top: 0; left: 0; right: 0; height: 6%; background: rgba(255,255,255,.35); backdrop-filter: blur(6px); }
+  .pane-menubar { position: absolute; top: 0; left: 0; right: 0; height: 6%; background: rgba(255,255,255,.35); }
   .pane-zone { position: absolute; border-radius: 10px; background: rgba(47,91,234,.22); border: 2px solid var(--accent); opacity: 0; transition: opacity .25s; top: 8%; bottom: 3%; }
   .pane-zone.on { opacity: 1; }
   .pw { position: absolute; border-radius: 10px; background: var(--card); box-shadow: 0 8px 24px rgba(0,0,0,.18), 0 0 0 1px var(--line); transition: left .55s cubic-bezier(.3,.7,.2,1), top .55s cubic-bezier(.3,.7,.2,1), width .55s cubic-bezier(.3,.7,.2,1), height .55s cubic-bezier(.3,.7,.2,1); overflow: hidden; }
@@ -68,228 +111,201 @@
   .pw .tb i { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); opacity: .5; }
   .pw .ln { height: 5px; margin: 8px 10px 0; border-radius: 3px; background: var(--line); }
   .pw.a .tb { background: #ffd9d4; } .pw.b .tb { background: #d4e6ff; } .pw.c .tb { background: #d8f5e4; }
-  .pane-chip { position: absolute; right: 12px; bottom: 12px; font-size: 12px; padding: 3px 10px; border-radius: 99px; background: var(--card); border: 1px solid var(--line); color: var(--muted); font-variant-numeric: tabular-nums; }
-  footer { padding: 28px 0 80px; color: var(--muted); font-size: 14px; }
-  footer a { color: inherit; }
-  @media (max-width: 560px) { section.app { padding: 20px; border-radius: 20px; } .shots img { height: 320px; } .shots.phone img { height: 380px; } .shots.wide img { width: 88%; height: auto; } }
+  .pane-chip { position: absolute; right: 12px; bottom: 12px; font-size: 12px; padding: 3px 10px; border-radius: 99px; background: var(--card); border: 1px solid var(--line); color: var(--muted); }
+
+  @media (max-width: 860px) {
+    .grid { grid-template-columns: 1fr; } .tile, .tile.w3 { grid-column: auto; min-height: 320px; }
+    .sc-in { grid-template-columns: 1fr; gap: 20px; } .sc-side { position: static; }
+    .slide.land img { height: auto; width: 86vw; } .slide.phone img { height: 62vh; } .slide.demo { width: 88vw; }
+    .demo-box li { font-size: 13px; } .demo-box li.messy .name { font-size: 11px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .tile { animation: none; opacity: 1; transform: none; } .sc.open { animation: none; } html { scroll-behavior: auto; } }
 </style>
 </head>
 <body>
+<div class="glow" aria-hidden="true"></div>
 <div class="wrap">
   <header>
-    <h1>Hayat Ayubi Portfolio</h1>
-    <p>Apps I’ve built for Mac and iPhone: email, TV, window management, flashcards and more.</p>
-    <nav>
-      <a href="#tern">Tern</a><a href="#lumen">Lumen</a><a href="#tidyshot">TidyShot</a><a href="#pane">Pane</a><a href="#flashcraft">Flashcraft</a><a href="#focuslist">Focus List</a><a href="#calendarwidget">CalendarWidget</a>
-    </nav>
+    <h1>Hayat Ayubi</h1>
   </header>
+  <main class="grid" id="grid"></main>
+  <footer>© 2026 Hayat Ayubi. Mac downloads are signed and notarised by Apple.</footer>
+</div>
 
-  <section class="app" id="tern">
-    <div class="head">
-      <img src="img/icon-tern.png" alt="">
-      <div class="t"><h2>Tern</h2><div class="chips"><span class="chip">Mac 1.2.3</span><span class="chip">iPhone</span><span class="chip">Email</span></div></div>
-    </div>
-    <p class="desc">A keyboard-first email app for Gmail and iCloud. Mail is split into what needs a reply and what’s just FYI, newsletters get their own quiet place, and smart drafting runs entirely on your device.</p>
-    <div class="btns">
-      <a class="btn primary" href="https://github.com/tern-inbox/tern/releases/latest">Download for Mac</a>
-      <a class="btn" href="https://tern-inbox.github.io">Website</a>
-      <span class="btn soon">iPhone: in App Store review</span>
-    </div>
-    <div class="shots-label">On iPhone</div>
-    <div class="shots phone">
-      <img src="img/tern-1-needs-reply.png" alt="Tern: needs reply" loading="lazy">
-      <img src="img/tern-2-fyi.png" alt="Tern: FYI" loading="lazy">
-      <img src="img/tern-3-invite.png" alt="Tern: calendar invite" loading="lazy">
-      <img src="img/tern-4-reader.png" alt="Tern: reading an email" loading="lazy">
-      <img src="img/tern-5-reply.png" alt="Tern: reply" loading="lazy">
-      <img src="img/tern-6-newsletters.png" alt="Tern: newsletters" loading="lazy">
-    </div>
-    <div class="shots-label">On Mac</div>
-    <div class="shots land">
-      <img src="img/tern-mac-01-inbox.jpg" alt="Tern on Mac: needs reply inbox" loading="lazy">
-      <img src="img/tern-mac-02-draft.jpg" alt="Tern on Mac: drafting a reply" loading="lazy">
-      <img src="img/tern-mac-03-command.jpg" alt="Tern on Mac: command bar" loading="lazy">
-      <img src="img/tern-mac-09-invite.jpg" alt="Tern on Mac: calendar invite" loading="lazy">
-      <img src="img/tern-mac-05-newsletters.jpg" alt="Tern on Mac: newsletters" loading="lazy">
-    </div>
-  </section>
-
-  <section class="app" id="lumen">
-    <div class="head">
-      <img src="img/icon-lumen.png" alt="">
-      <div class="t"><h2>Lumen</h2><div class="chips"><span class="chip">Mac 1.0</span><span class="chip">Android 0.9.4</span><span class="chip">iOS</span><span class="chip">IPTV player</span></div></div>
-    </div>
-    <p class="desc">A clean IPTV player with live TV, a TV guide, movies, series and a favourites row, designed to feel like a streaming app on the big screen.</p>
-    <div class="btns">
-      <a class="btn primary" href="https://github.com/lumen-tv/Lumen-TV/releases/tag/mac">Download for Mac</a>
-      <a class="btn" href="https://github.com/lumen-tv/Lumen-TV/releases/latest">Android APK</a>
-      <a class="btn" href="https://github.com/lumen-tv/Lumen-TV">GitHub</a>
-    </div>
-    <div class="shots land">
-      <img src="img/lumen-mac-1.jpg" alt="Lumen on Mac: Live TV home with favourites" loading="lazy">
-      <img src="img/lumen-mac-guide.jpg" alt="Lumen on Mac: TV guide" loading="lazy">
-      <img src="img/lumen-mac-movies.jpg" alt="Lumen on Mac: movies" loading="lazy">
-      <img src="img/lumen-mac-series.jpg" alt="Lumen on Mac: series" loading="lazy">
-      <img src="img/lumen-mac-mylist.jpg" alt="Lumen on Mac: My List" loading="lazy">
-    </div>
-  </section>
-
-  <section class="app" id="tidyshot">
-    <div class="head">
-      <img src="img/icon-tidyshot.png" alt="">
-      <div class="t"><h2>TidyShot</h2><div class="chips"><span class="chip">Mac 0.1.1</span><span class="chip">Menu bar</span></div></div>
-    </div>
-    <p class="desc">Automatically gives screenshots and downloads meaningful names. It reads what’s in the image with Apple’s on-device intelligence, so nothing leaves your Mac and there’s nothing to configure.</p>
-    <div class="btns">
-      <a class="btn primary" href="https://github.com/hayatayubi/tidyshot/releases/latest">Download for Mac</a>
-      <a class="btn" href="https://github.com/hayatayubi/tidyshot">GitHub</a>
-    </div>
-    <div class="demo" id="tidydemo" aria-label="Animation: messy screenshot names becoming descriptive names">
-      <div class="demo-bar"><i></i><i></i><i></i><b>Screenshots</b><span class="demo-status" id="tidystatus">Waiting…</span></div>
-      <ul id="tidylist"></ul>
-      <div class="demo-cap">TidyShot reads each new screenshot on your Mac and renames it, so Desktop stops looking like this.</div>
-    </div>
-  </section>
-
-  <section class="app" id="pane">
-    <div class="head">
-      <img src="img/icon-pane.png" alt="">
-      <div class="t"><h2>Pane</h2><div class="chips"><span class="chip">Mac 0.1.5</span><span class="chip">Menu bar</span><span class="chip">Window management</span></div></div>
-    </div>
-    <p class="desc">Snap, move and resize windows with drags and hotkeys. A lightweight window manager that stays out of the way, with a per-app exclusion list.</p>
-    <div class="btns">
-      <a class="btn primary" href="https://github.com/hayatayubi/pane/releases/latest">Download for Mac</a>
-      <a class="btn" href="https://github.com/hayatayubi/pane">GitHub</a>
-    </div>
-    <div class="pane-demo" id="panedemo" aria-label="Animation: windows snapping into tidy layouts with Pane">
-      <div class="pane-menubar"></div>
-      <div class="pane-zone" id="pz"></div>
-      <div class="pw a" id="wa"><div class="tb"><i></i><i></i><i></i></div><div class="ln"></div><div class="ln" style="width:60%"></div><div class="ln" style="width:75%"></div></div>
-      <div class="pw b" id="wb"><div class="tb"><i></i><i></i><i></i></div><div class="ln"></div><div class="ln" style="width:70%"></div><div class="ln" style="width:50%"></div></div>
-      <div class="pw c" id="wc"><div class="tb"><i></i><i></i><i></i></div><div class="ln"></div><div class="ln" style="width:55%"></div><div class="ln" style="width:80%"></div></div>
-      <div class="pane-chip" id="pchip">Drag to an edge</div>
-    </div>
-  </section>
-
-  <section class="app" id="flashcraft">
-    <div class="head">
-      <img src="img/icon-flashcraft.png" alt="">
-      <div class="t"><h2>Flashcraft</h2><div class="chips"><span class="chip">Mac 1.1.5</span><span class="chip">Flashcards</span></div></div>
-    </div>
-    <p class="desc">Build a deck, add cards, then study. A calm flashcard app with spaced review and nothing else in the way.</p>
-    <div class="btns">
-      <a class="btn primary" href="https://github.com/hayatayubi/flashcraft/releases/latest">Download for Mac</a>
-      <a class="btn" href="https://github.com/hayatayubi/flashcraft">GitHub</a>
-    </div>
-    <div class="shots land">
-      <img src="img/flashcraft-decks.jpg" alt="Flashcraft deck list" loading="lazy">
-      <img src="img/flashcraft-deck.jpg" alt="Flashcraft deck page" loading="lazy">
-      <img src="img/flashcraft-question.jpg" alt="Flashcraft study card: question" loading="lazy">
-      <img src="img/flashcraft-answer.jpg" alt="Flashcraft study card: answer" loading="lazy">
-      <img src="img/flashcraft-themes.jpg" alt="Flashcraft themes" loading="lazy">
-    </div>
-  </section>
-
-  <section class="app" id="focuslist">
-    <div class="head">
-      <img src="img/icon-focuslist.png" alt="">
-      <div class="t"><h2>Focus List</h2><div class="chips"><span class="chip">iPhone</span><span class="chip">SwiftUI</span><span class="chip">To-do list</span></div></div>
-    </div>
-    <p class="desc">A simple, modern to-do list with priorities, work and home categories, due dates, reminders and subtasks with progress tracking.</p>
-    <div class="btns">
-      <a class="btn" href="https://github.com/hayatayubi/focuslist">Source on GitHub</a>
-      <span class="btn soon">App Store: coming soon</span>
-    </div>
-    <div class="shots phone">
-      <img src="img/focuslist-list.jpg" alt="Focus List task list" loading="lazy">
-      <img src="img/focuslist-new-task.jpg" alt="Focus List new task screen" loading="lazy">
-    </div>
-  </section>
-
-  <section class="app" id="calendarwidget">
-    <div class="head">
-      <img src="img/icon-calendar.png" alt="">
-      <div class="t"><h2>CalendarWidget</h2><div class="chips"><span class="chip">iPhone</span><span class="chip">WidgetKit</span></div></div>
-    </div>
-    <p class="desc">A minimalist home-screen widget for your upcoming calendar events: plain type, generous whitespace, light or dark, tap to open Calendar.</p>
-    <div class="btns"><span class="btn soon">App Store: coming soon</span></div>
-    <div class="shots">
-      <img src="img/calendarwidget-widget.png" alt="CalendarWidget showing upcoming events" loading="lazy" style="height:260px">
-      <img src="img/calendarwidget-home.jpg" alt="CalendarWidget on the iPhone home screen" loading="lazy">
-    </div>
-  </section>
-
-  <footer>© 2026 Hayat Ayubi. Downloads are signed and notarised by Apple where applicable.</footer>
+<div class="sc" id="sc" role="dialog" aria-modal="true" aria-label="App details" hidden>
+  <div class="glow2" aria-hidden="true"></div>
+  <div class="sc-in" id="scin"></div>
 </div>
 
 <script>
 (function () {
-  var rows = [
-    ["Screenshot 2026-11-09 at 15.49.12.png", "Receipt – Pret lunch £8.40.png"],
-    ["Screenshot 2026-11-09 at 15.51.03.png", "Error – Xcode build failed.png"],
-    ["Screen Shot 2026-11-08 at 21.07.44.png", "Chat – Dinner plans with Sam.png"],
-    ["Screenshot 2026-11-08 at 09.12.30.png", "Invoice – Amazon order 4821.png"],
-    ["Untitled 2.png", "Code – Swift ForEach example.png"]
+  var I = function (n) { return 'img/' + n; };
+  var APPS = [
+    { id: 'tern', name: 'Tern', tag: 'Keyboard-first email', icon: 'icon-tern.png', c1: '#ffb48a', c2: '#ff6a3d', w3: true,
+      chips: ['Mac 1.2.3', 'iPhone', 'Email'],
+      desc: 'A keyboard-first email app for Gmail and iCloud. Mail is split into what needs a reply and what’s just FYI, newsletters get their own quiet place, and smart drafting runs entirely on your device.',
+      btns: [['Download for Mac', 'https://github.com/tern-inbox/tern/releases/latest', 1], ['Website', 'https://tern-inbox.github.io'], ['iPhone: in App Store review', null]],
+      cover: { src: 'tern-mac-01-inbox.jpg', cls: '' },
+      media: [{ g: 'Mac', k: 'land', s: ['tern-mac-01-inbox.jpg', 'tern-mac-02-draft.jpg', 'tern-mac-03-command.jpg', 'tern-mac-09-invite.jpg', 'tern-mac-05-newsletters.jpg'] },
+              { g: 'iPhone', k: 'phone', s: ['tern-1-needs-reply.png', 'tern-2-fyi.png', 'tern-3-invite.png', 'tern-4-reader.png', 'tern-5-reply.png', 'tern-6-newsletters.png'] }] },
+    { id: 'lumen', name: 'Lumen', tag: 'IPTV player', icon: 'icon-lumen.png', c1: '#2a3a66', c2: '#0f1426', w3: true,
+      chips: ['Mac 1.0', 'Android 0.9.4', 'iOS', 'IPTV'],
+      desc: 'A clean IPTV player with live TV, a TV guide, movies, series and a favourites row, designed to feel like a streaming app on the big screen.',
+      btns: [['Download for Mac', 'https://github.com/lumen-tv/Lumen-TV/releases/tag/mac', 1], ['Android APK', 'https://github.com/lumen-tv/Lumen-TV/releases/latest'], ['GitHub', 'https://github.com/lumen-tv/Lumen-TV']],
+      cover: { src: 'lumen-mac-1.jpg', cls: '' },
+      media: [{ k: 'land', s: ['lumen-mac-1.jpg', 'lumen-mac-guide.jpg', 'lumen-mac-movies.jpg', 'lumen-mac-series.jpg', 'lumen-mac-mylist.jpg'] }] },
+    { id: 'tidyshot', name: 'TidyShot', tag: 'Screenshots that name themselves', icon: 'icon-tidyshot.png', c1: '#8aa0ff', c2: '#5a3fd8',
+      chips: ['Mac 0.1.1', 'Menu bar'],
+      desc: 'Automatically gives screenshots and downloads meaningful names. It reads what’s in the image with Apple’s on-device intelligence, so nothing leaves your Mac and there’s nothing to configure.',
+      btns: [['Download for Mac', 'https://github.com/hayatayubi/tidyshot/releases/latest', 1], ['GitHub', 'https://github.com/hayatayubi/tidyshot']],
+      cover: { icon: true }, media: [{ demo: 'tidy' }] },
+    { id: 'pane', name: 'Pane', tag: 'Window snapping', icon: 'icon-pane.png', c1: '#9ad0ff', c2: '#6b8cff',
+      chips: ['Mac 0.1.5', 'Menu bar', 'Window management'],
+      desc: 'Snap, move and resize windows with drags and hotkeys. A lightweight window manager that stays out of the way, with a per-app exclusion list.',
+      btns: [['Download for Mac', 'https://github.com/hayatayubi/pane/releases/latest', 1], ['GitHub', 'https://github.com/hayatayubi/pane']],
+      cover: { icon: true }, media: [{ demo: 'pane' }] },
+    { id: 'flashcraft', name: 'Flashcraft', tag: 'Calm flashcards', icon: 'icon-flashcraft.png', c1: '#ffc6e0', c2: '#e0589a',
+      chips: ['Mac 1.1.5', 'Flashcards'],
+      desc: 'Build a deck, add cards, then study. A calm flashcard app with spaced review and nothing else in the way.',
+      btns: [['Download for Mac', 'https://github.com/hayatayubi/flashcraft/releases/latest', 1], ['GitHub', 'https://github.com/hayatayubi/flashcraft']],
+      cover: { src: 'flashcraft-decks.jpg', cls: '' },
+      media: [{ k: 'land', s: ['flashcraft-decks.jpg', 'flashcraft-deck.jpg', 'flashcraft-question.jpg', 'flashcraft-answer.jpg', 'flashcraft-themes.jpg'] }] },
+    { id: 'focuslist', name: 'Focus List', tag: 'Simple to-do list', icon: 'icon-focuslist.png', c1: '#c9d9ff', c2: '#9a7bff', w3: true,
+      chips: ['iPhone', 'SwiftUI', 'To-do list'],
+      desc: 'A simple, modern to-do list with priorities, work and home categories, due dates, reminders and subtasks with progress tracking.',
+      btns: [['Source on GitHub', 'https://github.com/hayatayubi/focuslist', 1], ['App Store: coming soon', null]],
+      cover: { src: 'focuslist-list.jpg', cls: 'phone' },
+      media: [{ k: 'phone', s: ['focuslist-list.jpg', 'focuslist-new-task.jpg'] }] },
+    { id: 'calendarwidget', name: 'CalendarWidget', tag: 'Minimal calendar widget', icon: 'icon-calendar.png', c1: '#dfe6f5', c2: '#9db3e6', w3: true,
+      chips: ['iPhone', 'WidgetKit'],
+      desc: 'A minimalist home-screen widget for your upcoming calendar events: plain type, generous whitespace, light or dark, tap to open Calendar.',
+      btns: [['App Store: coming soon', null]],
+      cover: { src: 'calendarwidget-widget.png', cls: 'widget' },
+      media: [{ k: 'widget', s: ['calendarwidget-widget.png'] }, { k: 'phone', s: ['calendarwidget-home.jpg'] }] }
   ];
-  var list = document.getElementById('tidylist'), status = document.getElementById('tidystatus');
-  if (!list) return;
-  var lis = rows.map(function (r) {
-    var li = document.createElement('li'); li.className = 'messy';
-    li.innerHTML = '<span class="thumb"></span><span class="name"></span>';
-    li.querySelector('.name').textContent = r[0]; list.appendChild(li); return li;
-  });
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
-  function setNeat(i) { lis[i].className = 'neat'; lis[i].querySelector('.name').textContent = rows[i][1]; }
-  function setMessy(i) { lis[i].className = 'messy'; lis[i].querySelector('.name').textContent = rows[i][0]; }
-  if (reduce) { rows.forEach(function (_, i) { setNeat(i); }); status.textContent = 'Renamed'; return; }
-  async function rename(i) {
-    var li = lis[i]; li.classList.add('swap'); await sleep(250);
-    li.querySelector('.name').textContent = rows[i][1]; li.className = 'neat swap'; await sleep(30);
-    li.classList.remove('swap');
-  }
-  var running = false;
-  async function loop() {
-    if (running) return; running = true;
-    while (true) {
-      rows.forEach(function (_, i) { setMessy(i); });
-      status.className = 'demo-status'; status.textContent = 'Waiting…'; await sleep(1800);
-      status.className = 'demo-status on'; status.textContent = 'TidyShot is renaming…';
-      for (var i = 0; i < rows.length; i++) { await sleep(650); await rename(i); }
-      status.textContent = 'All renamed'; await sleep(3200);
-    }
-  }
-  var box = document.getElementById('tidydemo');
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function (e, o) { if (e[0].isIntersecting) { loop(); o.disconnect(); } }, { threshold: .3 }).observe(box);
-  } else { loop(); }
-})();
-</script>
 
-<script>
-(function () {
-  var box = document.getElementById('panedemo'); if (!box) return;
-  var A = document.getElementById('wa'), B = document.getElementById('wb'), C = document.getElementById('wc');
-  var Z = document.getElementById('pz'), chip = document.getElementById('pchip');
-  function put(el, l, t, w, h, z) { el.style.left = l + '%'; el.style.top = t + '%'; el.style.width = w + '%'; el.style.height = h + '%'; if (z) el.style.zIndex = z; }
-  function zone(l, w) { Z.style.left = l + '%'; Z.style.width = w + '%'; Z.classList.add('on'); }
-  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
-  function messy() { put(A, 8, 14, 46, 52, 1); put(B, 30, 28, 44, 50, 2); put(C, 48, 12, 40, 56, 3); }
+  var grid = document.getElementById('grid'), sc = document.getElementById('sc'), scin = document.getElementById('scin');
+  var current = -1, cleanup = [];
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduce) { put(A, 1, 8, 32, 89); put(B, 34, 8, 32, 89); put(C, 67, 8, 32, 89); chip.textContent = 'Thirds'; return; }
-  async function loop() {
-    while (true) {
-      messy(); Z.classList.remove('on'); chip.textContent = 'Drag to an edge'; await sleep(1600);
-      zone(0, 50); chip.textContent = 'Left half'; await sleep(700); put(A, 1, 8, 48.5, 89); Z.classList.remove('on'); await sleep(900);
-      zone(50, 50); chip.textContent = 'Right half'; await sleep(700); put(B, 50.5, 8, 48.5, 89); Z.classList.remove('on'); await sleep(900);
-      chip.textContent = 'Hotkey: thirds'; await sleep(700);
-      put(A, 1, 8, 32, 89); put(B, 34, 8, 32, 89); put(C, 67, 8, 32, 89, 4); await sleep(2800);
-    }
+
+  APPS.forEach(function (a, i) {
+    var b = document.createElement('button');
+    b.className = 'tile' + (a.w3 ? ' w3' : ''); b.type = 'button';
+    b.style.setProperty('--c1', a.c1); b.style.setProperty('--c2', a.c2);
+    var cover = a.cover.icon ? '<img class="big-icon" src="' + I(a.icon) + '" alt="">' : '<img class="shot ' + (a.cover.cls || '') + '" src="' + I(a.cover.src) + '" alt="" loading="lazy">';
+    b.innerHTML = '<div class="cover">' + cover + '</div><div class="meta"><img src="' + I(a.icon) + '" alt=""><div><h3></h3><p></p></div><span class="arrow" aria-hidden="true">→</span></div>';
+    b.querySelector('h3').textContent = a.name; b.querySelector('p').textContent = a.tag;
+    b.setAttribute('aria-label', 'Open ' + a.name);
+    b.addEventListener('click', function () { openApp(i); });
+    grid.appendChild(b);
+  });
+
+  /* ---- Demos ---- */
+  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+  function tidyDemo() {
+    var rows = [["Screenshot 2026-11-09 at 15.49.12.png", "Receipt – Pret lunch £8.40.png"], ["Screenshot 2026-11-09 at 15.51.03.png", "Error – Xcode build failed.png"], ["Screen Shot 2026-11-08 at 21.07.44.png", "Chat – Dinner plans with Sam.png"], ["Screenshot 2026-11-08 at 09.12.30.png", "Invoice – Amazon order 4821.png"], ["Untitled 2.png", "Code – Swift ForEach example.png"]];
+    var el = document.createElement('div'); el.className = 'demo-box';
+    el.innerHTML = '<div class="demo-bar"><i></i><i></i><i></i><b>Screenshots</b><span class="demo-status">Waiting…</span></div><ul></ul><div class="demo-cap">TidyShot reads each new screenshot on your Mac and renames it, so your Desktop stops looking like this.</div>';
+    var ul = el.querySelector('ul'), st = el.querySelector('.demo-status');
+    var lis = rows.map(function (r) { var li = document.createElement('li'); li.className = 'messy'; li.innerHTML = '<span class="thumb"></span><span class="name"></span>'; li.querySelector('.name').textContent = r[0]; ul.appendChild(li); return li; });
+    function neat(i) { lis[i].className = 'neat'; lis[i].querySelector('.name').textContent = rows[i][1]; }
+    function messy(i) { lis[i].className = 'messy'; lis[i].querySelector('.name').textContent = rows[i][0]; }
+    var alive = true;
+    if (reduce) { rows.forEach(function (_, i) { neat(i); }); st.textContent = 'Renamed'; return { el: el, stop: function () {} }; }
+    (async function () {
+      while (alive) {
+        rows.forEach(function (_, i) { messy(i); }); st.className = 'demo-status'; st.textContent = 'Waiting…'; await sleep(1500); if (!alive) return;
+        st.className = 'demo-status on'; st.textContent = 'TidyShot is renaming…';
+        for (var i = 0; i < rows.length && alive; i++) { await sleep(650); lis[i].classList.add('swap'); await sleep(250); lis[i].querySelector('.name').textContent = rows[i][1]; lis[i].className = 'neat swap'; await sleep(30); lis[i].classList.remove('swap'); }
+        st.textContent = 'All renamed'; await sleep(3200);
+      }
+    })();
+    return { el: el, stop: function () { alive = false; } };
   }
-  var started = false;
-  function go() { if (!started) { started = true; loop(); } }
-  if ('IntersectionObserver' in window) new IntersectionObserver(function (e, o) { if (e[0].isIntersecting) { go(); o.disconnect(); } }, { threshold: .3 }).observe(box); else go();
-  messy();
+  function paneDemo() {
+    var el = document.createElement('div'); el.className = 'pane-demo';
+    el.innerHTML = '<div class="pane-menubar"></div><div class="pane-zone"></div>' + ['a', 'b', 'c'].map(function (k) { return '<div class="pw ' + k + '"><div class="tb"><i></i><i></i><i></i></div><div class="ln"></div><div class="ln" style="width:60%"></div><div class="ln" style="width:75%"></div></div>'; }).join('') + '<div class="pane-chip">Drag to an edge</div>';
+    var W = el.querySelectorAll('.pw'), Z = el.querySelector('.pane-zone'), chip = el.querySelector('.pane-chip');
+    function put(e, l, t, w, h, z) { e.style.left = l + '%'; e.style.top = t + '%'; e.style.width = w + '%'; e.style.height = h + '%'; if (z) e.style.zIndex = z; }
+    function zone(l, w) { Z.style.left = l + '%'; Z.style.width = w + '%'; Z.classList.add('on'); }
+    function messy() { put(W[0], 8, 14, 46, 52, 1); put(W[1], 30, 28, 44, 50, 2); put(W[2], 48, 12, 40, 56, 3); }
+    var alive = true; messy();
+    if (reduce) { put(W[0], 1, 8, 32, 89); put(W[1], 34, 8, 32, 89); put(W[2], 67, 8, 32, 89); chip.textContent = 'Thirds'; return { el: el, stop: function () {} }; }
+    (async function () {
+      await sleep(300);
+      while (alive) {
+        messy(); Z.classList.remove('on'); chip.textContent = 'Drag to an edge'; await sleep(1600); if (!alive) return;
+        zone(0, 50); chip.textContent = 'Left half'; await sleep(700); put(W[0], 1, 8, 48.5, 89); Z.classList.remove('on'); await sleep(900);
+        zone(50, 50); chip.textContent = 'Right half'; await sleep(700); put(W[1], 50.5, 8, 48.5, 89); Z.classList.remove('on'); await sleep(900);
+        chip.textContent = 'Hotkey: thirds'; await sleep(700); put(W[0], 1, 8, 32, 89); put(W[1], 34, 8, 32, 89); put(W[2], 67, 8, 32, 89, 4); await sleep(2800);
+      }
+    })();
+    return { el: el, stop: function () { alive = false; } };
+  }
+
+  /* ---- Showcase ---- */
+  function openApp(i, noHash) {
+    var a = APPS[i]; current = i; stopDemos();
+    sc.style.setProperty('--c1', a.c1);
+    scin.innerHTML = '';
+    var top = document.createElement('div'); top.className = 'sc-top';
+    top.innerHTML = '<button class="sc-btn" id="back" type="button">← All apps</button><div class="sc-nav"><button class="sc-btn" id="prev" type="button" aria-label="Previous app">←</button><button class="sc-btn" id="next" type="button" aria-label="Next app">→</button></div>';
+    var side = document.createElement('div'); side.className = 'sc-side';
+    side.innerHTML = '<img class="icon" src="' + I(a.icon) + '" alt=""><h2></h2><div class="chips"></div><p class="desc"></p><div class="btns"></div>';
+    side.querySelector('h2').textContent = a.name; side.querySelector('.desc').textContent = a.desc;
+    a.chips.forEach(function (c) { var s = document.createElement('span'); s.className = 'chip'; s.textContent = c; side.querySelector('.chips').appendChild(s); });
+    a.btns.forEach(function (b) { var e = document.createElement(b[1] ? 'a' : 'span'); e.className = 'btn' + (b[2] ? ' primary' : '') + (b[1] ? '' : ' soon'); e.textContent = b[0]; if (b[1]) { e.href = b[1]; e.target = '_blank'; e.rel = 'noopener'; } side.querySelector('.btns').appendChild(e); });
+    var media = document.createElement('div'); media.className = 'sc-media';
+    a.media.forEach(function (m) {
+      if (m.g) { var gl = document.createElement('div'); gl.className = 'group-label'; gl.textContent = m.g; media.appendChild(gl); }
+      var stage = document.createElement('div'); stage.className = 'stage';
+      var track = document.createElement('div'); track.className = 'track'; stage.appendChild(track);
+      if (m.demo) {
+        var d = m.demo === 'tidy' ? tidyDemo() : paneDemo(); cleanup.push(d.stop);
+        var sl = document.createElement('div'); sl.className = 'slide demo'; sl.appendChild(d.el); track.appendChild(sl);
+      } else {
+        m.s.forEach(function (f) { var sl = document.createElement('div'); sl.className = 'slide ' + m.k; var im = new Image(); im.src = I(f); im.alt = a.name + ' screenshot'; im.decoding = 'async'; sl.appendChild(im); track.appendChild(sl); });
+        if (m.s.length > 1) {
+          var ctrl = document.createElement('div'); ctrl.className = 'ctrl';
+          ctrl.innerHTML = '<span class="count">1 / ' + m.s.length + '</span><button class="cbtn" type="button" aria-label="Previous screenshot">‹</button><button class="cbtn" type="button" aria-label="Next screenshot">›</button>';
+          var cnt = ctrl.querySelector('.count'), bs = ctrl.querySelectorAll('.cbtn');
+          (function (track, cnt, bs, n) {
+            function idx() { var kids = track.children, c = track.scrollLeft + track.clientWidth / 2, best = 0, bd = 1e9; for (var k = 0; k < kids.length; k++) { var mid = kids[k].offsetLeft - track.offsetLeft + kids[k].offsetWidth / 2, dd = Math.abs(mid - c); if (dd < bd) { bd = dd; best = k; } } return best; }
+            function upd() { var k = idx(); cnt.textContent = (k + 1) + ' / ' + n; bs[0].disabled = k === 0; bs[1].disabled = k === n - 1; }
+            function go(d) { var k = Math.max(0, Math.min(n - 1, idx() + d)), el = track.children[k]; track.scrollTo({ left: el.offsetLeft - track.offsetLeft - (track.clientWidth - el.offsetWidth) / 2, behavior: 'smooth' }); }
+            bs[0].onclick = function () { go(-1); }; bs[1].onclick = function () { go(1); };
+            track.addEventListener('scroll', function () { requestAnimationFrame(upd); }); setTimeout(upd, 60);
+            track._go = go;
+          })(track, cnt, bs, m.s.length);
+          stage.appendChild(ctrl);
+        }
+      }
+      media.appendChild(stage);
+    });
+    scin.appendChild(top); scin.appendChild(side); scin.appendChild(media);
+    document.getElementById('back').onclick = closeApp;
+    document.getElementById('prev').onclick = function () { openApp((current + APPS.length - 1) % APPS.length); };
+    document.getElementById('next').onclick = function () { openApp((current + 1) % APPS.length); };
+    sc.hidden = false; sc.classList.add('open'); document.body.classList.add('locked'); sc.scrollTop = 0;
+    if (!noHash) history.replaceState(null, '', '#' + a.id);
+    document.title = a.name + ' · Hayat Ayubi Portfolio';
+    document.getElementById('back').focus({ preventScroll: true });
+  }
+  function stopDemos() { cleanup.forEach(function (f) { f(); }); cleanup = []; }
+  function closeApp() {
+    stopDemos(); sc.classList.remove('open'); sc.hidden = true; document.body.classList.remove('locked');
+    history.replaceState(null, '', location.pathname + location.search); document.title = 'Hayat Ayubi Portfolio';
+    var t = grid.children[current]; current = -1; if (t) t.focus({ preventScroll: true });
+  }
+  document.addEventListener('keydown', function (e) {
+    if (current < 0) return;
+    if (e.key === 'Escape') closeApp();
+    else if (e.key === 'ArrowRight' && e.shiftKey) document.getElementById('next').click();
+    else if (e.key === 'ArrowLeft' && e.shiftKey) document.getElementById('prev').click();
+    else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { var tr = scin.querySelector('.track'); if (tr && tr._go) { tr._go(e.key === 'ArrowRight' ? 1 : -1); e.preventDefault(); } }
+  });
+  function fromHash() { var id = location.hash.replace('#', ''), i = APPS.findIndex(function (a) { return a.id === id; }); if (i >= 0) openApp(i, true); else if (current >= 0) closeApp(); }
+  window.addEventListener('hashchange', fromHash); fromHash();
 })();
 </script>
 </body>
